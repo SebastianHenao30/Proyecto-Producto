@@ -3,11 +3,13 @@ include_once(__DIR__.'/../config/config.php');
 include_once(__DIR__.'/../config/conexion.php');
 
 class ProductoDAO {
+    private $id;
     private $nombre;
     private $descripcion;
     private $conn;
 
-    public function __construct($nom='',$desc=''){
+    public function __construct($nom='',$desc='',$id=null){
+        $this->id=$id;
         $this->nombre=$nom;
         $this->descripcion=$desc;
         $this->conn = new Conexion(DB_USER, DB_PASS, DB_HOST, DB_NAME);
@@ -36,6 +38,24 @@ class ProductoDAO {
         } catch (PDOException $e) {
             // Manejar errores de la base de datos
             echo "Error al guardar el producto: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function actualizarProducto($id, $nombre, $descripcion) {
+        try {
+            $db = $this->conn->Conectarse();
+            $query = "UPDATE producto SET nombre = :nombre, descripcion = :descripcion WHERE id = :id";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':descripcion', $descripcion);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $this->conn->desconectar();
+            return true;
+        } catch (PDOException $e) {
+            // Manejar errores de la base de datos
+            echo "Error al actualizar el producto: " . $e->getMessage();
             return false;
         }
     }
