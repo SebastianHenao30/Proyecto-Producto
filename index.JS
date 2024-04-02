@@ -14,6 +14,7 @@ function cargarDatos() {
                 <td>${row.Descripcion}</td>
                 <td>
                     <button id="actualizar" class"btn btn-primary" >Actualizar</button>
+                    <button id="eliminar" class"btn btn-primary" >Eliminar</button>
                 </td>
                 
                 `;
