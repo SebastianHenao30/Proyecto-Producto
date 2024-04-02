@@ -30,7 +30,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     <td>${row.Id}</td>
                     <td>${row.Nombre}</td>
                     <td>${row.Descripcion}</td>
-                    <td><button class="btn btn-primary" onclick="abrirModalActualizar(${row.Id}, '${row.Nombre}', '${row.Descripcion}')">Actualizar</button></td>
+                    <td>
+                        <button class="btn btn-primary" onclick="abrirModalActualizar(${row.Id}, '${row.Nombre}', '${row.Descripcion}')">Actualizar</button>
+                        <button class="btn btn-primary">Eliminar</button>
+                    </td>
                     `;
                     tablaDatos.appendChild(tr);
 
