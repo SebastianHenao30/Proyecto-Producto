@@ -12,7 +12,10 @@ function cargarDatos() {
                 <td>${row.Id}</td>
                 <td>${row.Nombre}</td>
                 <td>${row.Descripcion}</td>
-                <td><button id="actualizar" class"btn btn-primary" >Actualizar</button></td>
+                <td>
+                    <button id="actualizar" class"btn btn-primary" >Actualizar</button>
+                </td>
+                
                 `;
                 tablaDatos.appendChild(tr);
             });
