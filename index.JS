@@ -13,6 +13,18 @@ function abrirModalActualizar(id, nombre, descripcion) {
     modalActualizar.show();
 }
 
+function abrirModalEliminar(id) {
+    console.log(id);
+
+    document.getElementById('idProductoEliminar').value = id;
+
+    // Abrir el modal de actualización
+    var modalEliminar = new bootstrap.Modal(document.getElementById('eliminarProductoModal'));
+    modalEliminar.show();
+
+
+}
+
 
 document.addEventListener("DOMContentLoaded", function() {
     cargarDatos();
@@ -32,13 +44,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     <td>${row.Descripcion}</td>
                     <td>
                         <button class="btn btn-primary" onclick="abrirModalActualizar(${row.Id}, '${row.Nombre}', '${row.Descripcion}')">Actualizar</button>
-                        <button class="btn btn-primary">Eliminar</button>
+                        <button class="btn btn-primary" onclick="abrirModalEliminar(${row.Id})">Eliminar</button>
                     </td>
                     `;
                     tablaDatos.appendChild(tr);
-
-                    
                 });
+                             
+                
             })
             .catch(error => {
                 console.error('Error al cargar datos:', error);
@@ -91,5 +103,32 @@ document.addEventListener("DOMContentLoaded", function() {
         actualizarDatos(formData);
     });
 
+    function eliminarProducto(id) {
+        fetch('controller/eliminarProductoController.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'idProductoEliminar=' + id
+        })
+        .then(response => response.text())
+        .then(data => {
+            cargarDatos(); // Recargar los datos después de la eliminación
+            alert(data); // Mostrar mensaje de éxito o error
+        })
+        .catch(error => {
+            console.error('Error al enviar la solicitud de eliminación:', error);
+        });
+    }
+
+    document.getElementById('confirmarEliminar').addEventListener('click', function() {
+        var idProductoEliminar = document.getElementById('idProductoEliminar').value;
+        console.log(idProductoEliminar);
+        eliminarProducto(idProductoEliminar)
+
+        var modalEliminar = new bootstrap.Modal(document.getElementById('eliminarProductoModal'));
+        
+    });
 });
+
 

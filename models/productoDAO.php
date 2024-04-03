@@ -59,9 +59,25 @@ class ProductoDAO {
             return false;
         }
     }
+
+    public function eliminarProducto($id) {
+        try {
+            $db = $this->conn->Conectarse();
+            $query = "DELETE FROM producto WHERE id = :id";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $this->conn->desconectar();
+            return true;
+        } catch (PDOException $e) {
+            echo "Error al eliminar el producto: " . $e->getMessage();
+            return false;
+        }
+    }
     
     
 }
 ?>
+
 
 
